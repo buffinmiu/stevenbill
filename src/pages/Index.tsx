@@ -109,7 +109,12 @@ const Index = () => {
                   <BarChart3 className="h-4 w-4" />
                   Create Forecast
                 </Button>
-                <Button variant="ghost" size="sm" className="w-full justify-start gap-2">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="w-full justify-start gap-2"
+                  onClick={() => setActiveTab("dashboard")}
+                >
                   <MessageSquare className="h-4 w-4" />
                   Ask AI Question
                 </Button>
