@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MessageSquare, BarChart3, Settings, Brain, ChevronDown, User } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 
 const Index = () => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
@@ -91,41 +92,25 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <div className="container mx-auto">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <div className="flex h-[calc(100vh-80px)]">
-            {/* Tab Navigation - Compact */}
-            <div className="w-16 border-r border-border bg-card/30 backdrop-blur-sm p-2">
-              <TabsList className="flex flex-col h-auto space-y-1 bg-transparent p-0">
-                <TabsTrigger 
-                  value="dashboard" 
-                  className="w-12 h-12 p-0 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-                >
-                  <BarChart3 className="h-5 w-5" />
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="chat" 
-                  className="w-12 h-12 p-0 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-                >
-                  <MessageSquare className="h-5 w-5" />
-                </TabsTrigger>
-              </TabsList>
+      <div className="h-[calc(100vh-80px)]">
+        <ResizablePanelGroup direction="horizontal">
+          {/* Dashboard Panel */}
+          <ResizablePanel defaultSize={70} minSize={30} collapsible>
+            <div className="h-full">
+              <ExecutiveDashboard userProfile={userProfile} />
             </div>
+          </ResizablePanel>
 
-            {/* Main Content Area */}
-            <div className="flex-1 overflow-auto">
-              <TabsContent value="dashboard" className="m-0 h-full">
-                <ExecutiveDashboard userProfile={userProfile} />
-              </TabsContent>
+          {/* Resizable Handle */}
+          <ResizableHandle withHandle />
 
-              <TabsContent value="chat" className="m-0 h-full p-6">
-                <div className="max-w-4xl mx-auto">
-                  <AiChat className="h-full" />
-                </div>
-              </TabsContent>
+          {/* AI Chat Panel */}
+          <ResizablePanel defaultSize={30} minSize={25} collapsible>
+            <div className="h-full p-6">
+              <AiChat className="h-full" />
             </div>
-          </div>
-        </Tabs>
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </div>
     </div>
   );
