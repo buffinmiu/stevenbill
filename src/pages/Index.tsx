@@ -5,7 +5,8 @@ import { AiChat } from "@/components/ai/ai-chat";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MessageSquare, BarChart3, Settings, TrendingUp, Brain } from "lucide-react";
+import { MessageSquare, BarChart3, Settings, Brain, ChevronDown, User } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 const Index = () => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
@@ -42,13 +43,48 @@ const Index = () => {
               <Button variant="ghost" size="icon">
                 <Settings className="h-4 w-4" />
               </Button>
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => setUserProfile(null)}
-              >
-                Reset Profile
-              </Button>
+              
+              {/* Profile Popover */}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" size="sm" className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    Profile
+                    <ChevronDown className="h-3 w-3" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-64" align="end">
+                  <Card className="shadow-card border-0">
+                    <CardContent className="p-4">
+                      <h3 className="font-semibold text-sm mb-2">Your Profile</h3>
+                      <div className="space-y-2 text-xs text-muted-foreground">
+                        <div className="flex justify-between">
+                          <span>Role:</span>
+                          <span className="font-medium capitalize">{userProfile.role.replace('-', ' ')}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Department:</span>
+                          <span className="font-medium capitalize">{userProfile.department.replace('-', ' ')}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Scope:</span>
+                          <span className="font-medium capitalize">{userProfile.reportingLevel}</span>
+                        </div>
+                      </div>
+                      <div className="mt-4 pt-3 border-t border-border">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          className="w-full"
+                          onClick={() => setUserProfile(null)}
+                        >
+                          Reset Profile
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
         </div>
@@ -58,67 +94,22 @@ const Index = () => {
       <div className="container mx-auto">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <div className="flex h-[calc(100vh-80px)]">
-            {/* Sidebar Navigation */}
-            <div className="w-64 border-r border-border bg-card/30 backdrop-blur-sm p-4">
+            {/* Tab Navigation - Compact */}
+            <div className="w-16 border-r border-border bg-card/30 backdrop-blur-sm p-2">
               <TabsList className="flex flex-col h-auto space-y-1 bg-transparent p-0">
                 <TabsTrigger 
                   value="dashboard" 
-                  className="w-full justify-start gap-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  className="w-12 h-12 p-0 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                 >
-                  <BarChart3 className="h-4 w-4" />
-                  Dashboard
+                  <BarChart3 className="h-5 w-5" />
                 </TabsTrigger>
                 <TabsTrigger 
                   value="chat" 
-                  className="w-full justify-start gap-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  className="w-12 h-12 p-0 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                 >
-                  <MessageSquare className="h-4 w-4" />
-                  AI Assistant
+                  <MessageSquare className="h-5 w-5" />
                 </TabsTrigger>
               </TabsList>
-
-              {/* Profile Summary */}
-              <Card className="mt-6 shadow-card">
-                <CardContent className="p-4">
-                  <h3 className="font-semibold text-sm mb-2">Your Profile</h3>
-                  <div className="space-y-2 text-xs text-muted-foreground">
-                    <div className="flex justify-between">
-                      <span>Role:</span>
-                      <span className="font-medium capitalize">{userProfile.role.replace('-', ' ')}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Department:</span>
-                      <span className="font-medium capitalize">{userProfile.department.replace('-', ' ')}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Scope:</span>
-                      <span className="font-medium capitalize">{userProfile.reportingLevel}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Quick Actions */}
-              <div className="mt-6 space-y-2">
-                <h3 className="font-semibold text-sm text-foreground mb-3">Quick Actions</h3>
-                <Button variant="ghost" size="sm" className="w-full justify-start gap-2">
-                  <TrendingUp className="h-4 w-4" />
-                  Generate Report
-                </Button>
-                <Button variant="ghost" size="sm" className="w-full justify-start gap-2">
-                  <BarChart3 className="h-4 w-4" />
-                  Create Forecast
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="w-full justify-start gap-2"
-                  onClick={() => setActiveTab("dashboard")}
-                >
-                  <MessageSquare className="h-4 w-4" />
-                  Ask AI Question
-                </Button>
-              </div>
             </div>
 
             {/* Main Content Area */}

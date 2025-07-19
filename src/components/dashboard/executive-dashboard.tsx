@@ -49,25 +49,23 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
   };
 
   return (
-    <div className="flex gap-6 h-full">
-      {/* Main Dashboard Content */}
-      <div className="flex-1 space-y-6 p-6 overflow-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">{getDashboardTitle()}</h1>
-            <p className="text-muted-foreground mt-1">{getWelcomeMessage()}</p>
-          </div>
-          <div className="flex gap-2">
-            <Button variant="outline" size="icon">
-              <RefreshCw className="h-4 w-4" />
-            </Button>
-            <Button variant="outline" className="flex items-center gap-2">
-              <Download className="h-4 w-4" />
-              Export
-            </Button>
-          </div>
+    <div className="space-y-6 p-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-foreground">{getDashboardTitle()}</h1>
+          <p className="text-muted-foreground mt-1">{getWelcomeMessage()}</p>
         </div>
+        <div className="flex gap-2">
+          <Button variant="outline" size="icon">
+            <RefreshCw className="h-4 w-4" />
+          </Button>
+          <Button variant="outline" className="flex items-center gap-2">
+            <Download className="h-4 w-4" />
+            Export
+          </Button>
+        </div>
+      </div>
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -308,14 +306,6 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
           </div>
         </TabsContent>
       </Tabs>
-      </div>
-
-      {/* AI Chat Sidebar */}
-      <div className="w-96 border-l border-border bg-card/30 backdrop-blur-sm">
-        <div className="h-full p-4">
-          <AiChat className="h-full" />
-        </div>
-      </div>
     </div>
   );
 }
