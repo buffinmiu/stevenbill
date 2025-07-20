@@ -29,28 +29,28 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-background">
       {/* Header */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-6 py-4">
+        <div className="container mx-auto px-4 md:px-6 py-3 md:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-lg bg-gradient-primary flex items-center justify-center">
-                <Brain className="h-6 w-6 text-white" />
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="h-8 w-8 md:h-10 md:w-10 rounded-lg bg-gradient-primary flex items-center justify-center">
+                <Brain className="h-4 w-4 md:h-6 md:w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-foreground">FP&A AI</h1>
-                <p className="text-xs text-muted-foreground">Intelligent Financial Analytics</p>
+                <h1 className="text-lg md:text-xl font-bold text-foreground">FP&A AI</h1>
+                <p className="text-xs text-muted-foreground hidden sm:block">Intelligent Financial Analytics</p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="icon">
+            <div className="flex items-center gap-1 md:gap-2">
+              <Button variant="ghost" size="icon" className="h-8 w-8 md:h-10 md:w-10">
                 <Settings className="h-4 w-4" />
               </Button>
               
               {/* Profile Popover */}
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" size="sm" className="flex items-center gap-2">
-                    <User className="h-4 w-4" />
-                    Profile
+                  <Button variant="outline" size="sm" className="flex items-center gap-1 md:gap-2 text-xs md:text-sm">
+                    <User className="h-3 w-3 md:h-4 md:w-4" />
+                    <span className="hidden sm:inline">Profile</span>
                     <ChevronDown className="h-3 w-3" />
                   </Button>
                 </PopoverTrigger>
@@ -92,25 +92,54 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <div className="h-[calc(100vh-80px)]">
-        <ResizablePanelGroup direction="horizontal">
-          {/* Dashboard Panel */}
-          <ResizablePanel defaultSize={70} minSize={30} collapsible>
-            <div className="h-full">
+      <div className="min-h-[calc(100vh-64px)] md:h-[calc(100vh-80px)]">
+        {/* Mobile: Tabs Layout */}
+        <div className="block lg:hidden">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
+            <div className="border-b border-border bg-background/95 backdrop-blur sticky top-[64px] z-40">
+              <TabsList className="grid w-full grid-cols-2 h-12 m-2">
+                <TabsTrigger value="dashboard" className="flex items-center gap-2">
+                  <BarChart3 className="h-4 w-4" />
+                  Dashboard
+                </TabsTrigger>
+                <TabsTrigger value="chat" className="flex items-center gap-2">
+                  <MessageSquare className="h-4 w-4" />
+                  AI Chat
+                </TabsTrigger>
+              </TabsList>
+            </div>
+            
+            <TabsContent value="dashboard" className="mt-0 p-4">
               <ExecutiveDashboard userProfile={userProfile} />
-            </div>
-          </ResizablePanel>
+            </TabsContent>
+            
+            <TabsContent value="chat" className="mt-0 p-4">
+              <AiChat className="h-[calc(100vh-140px)]" />
+            </TabsContent>
+          </Tabs>
+        </div>
 
-          {/* Resizable Handle */}
-          <ResizableHandle withHandle />
+        {/* Desktop: Resizable Panels Layout */}
+        <div className="hidden lg:block h-full">
+          <ResizablePanelGroup direction="horizontal">
+            {/* Dashboard Panel */}
+            <ResizablePanel defaultSize={70} minSize={30} collapsible>
+              <div className="h-full">
+                <ExecutiveDashboard userProfile={userProfile} />
+              </div>
+            </ResizablePanel>
 
-          {/* AI Chat Panel */}
-          <ResizablePanel defaultSize={30} minSize={25} collapsible>
-            <div className="h-full p-6">
-              <AiChat className="h-full" />
-            </div>
-          </ResizablePanel>
-        </ResizablePanelGroup>
+            {/* Resizable Handle */}
+            <ResizableHandle withHandle />
+
+            {/* AI Chat Panel */}
+            <ResizablePanel defaultSize={30} minSize={25} collapsible>
+              <div className="h-full p-6">
+                <AiChat className="h-full" />
+              </div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        </div>
       </div>
     </div>
   );

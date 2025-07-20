@@ -65,10 +65,10 @@ export function AiChat({ className }: AiChatProps) {
   };
 
   return (
-    <Card className={cn("flex flex-col h-[600px]", className)}>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Bot className="h-5 w-5 text-primary" />
+    <Card className={cn("flex flex-col", className)}>
+      <CardHeader className="p-4 md:p-6">
+        <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+          <Bot className="h-4 w-4 md:h-5 md:w-5 text-primary" />
           AI Financial Analyst
         </CardTitle>
       </CardHeader>
@@ -90,13 +90,13 @@ export function AiChat({ className }: AiChatProps) {
                 )}
                 <div
                   className={cn(
-                    "rounded-lg px-4 py-2 max-w-[80%]",
+                    "rounded-lg px-3 md:px-4 py-2 max-w-[85%] md:max-w-[80%]",
                     message.type === "user"
-                      ? "bg-primary text-primary-foreground ml-12"
+                      ? "bg-primary text-primary-foreground ml-8 md:ml-12"
                       : "bg-muted text-foreground"
                   )}
                 >
-                  <p className="text-sm">{message.content}</p>
+                  <p className="text-xs md:text-sm">{message.content}</p>
                   <p className="text-xs opacity-70 mt-1">
                     {message.timestamp.toLocaleTimeString()}
                   </p>
@@ -110,17 +110,17 @@ export function AiChat({ className }: AiChatProps) {
             ))}
           </div>
         </ScrollArea>
-        <div className="p-4 border-t border-border">
+        <div className="p-3 md:p-4 border-t border-border">
           <div className="flex gap-2">
             <Input
-              placeholder="Ask me about financial analysis, forecasting, or reporting..."
+              placeholder="Ask me about financial analysis..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleSend()}
-              className="flex-1"
+              className="flex-1 text-sm"
             />
-            <Button onClick={handleSend} size="icon">
-              <Send className="h-4 w-4" />
+            <Button onClick={handleSend} size="icon" className="h-9 w-9 md:h-10 md:w-10">
+              <Send className="h-3 w-3 md:h-4 md:w-4" />
             </Button>
           </div>
         </div>

@@ -96,11 +96,11 @@ export function UserProfileSetup({ onComplete }: UserProfileSetupProps) {
   const progress = (step / 4) * 100;
 
   return (
-    <div className="max-w-2xl mx-auto p-6 space-y-6">
-      <div className="text-center mb-8">
-        <UserCheck className="h-12 w-12 text-primary mx-auto mb-4" />
-        <h1 className="text-3xl font-bold text-foreground mb-2">Welcome to FP&A AI</h1>
-        <p className="text-muted-foreground">Let's customize your experience based on your role and interests</p>
+    <div className="max-w-2xl mx-auto p-4 md:p-6 space-y-4 md:space-y-6">
+      <div className="text-center mb-6 md:mb-8">
+        <UserCheck className="h-10 w-10 md:h-12 md:w-12 text-primary mx-auto mb-4" />
+        <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Welcome to FP&A AI</h1>
+        <p className="text-muted-foreground text-sm md:text-base">Let's customize your experience based on your role and interests</p>
       </div>
 
       <Progress value={progress} className="w-full" />
@@ -122,13 +122,13 @@ export function UserProfileSetup({ onComplete }: UserProfileSetupProps) {
               value={profile.role}
               onValueChange={(value) => setProfile(prev => ({ ...prev, role: value }))}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                 {roles.map((role) => (
-                  <div key={role.id} className="flex items-center space-x-2 p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors">
+                  <div key={role.id} className="flex items-center space-x-2 p-3 md:p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors">
                     <RadioGroupItem value={role.id} id={role.id} />
                     <Label htmlFor={role.id} className="flex-1 cursor-pointer">
-                      <div className="font-medium">{role.label}</div>
-                      <div className="text-sm text-muted-foreground">{role.description}</div>
+                      <div className="font-medium text-sm md:text-base">{role.label}</div>
+                      <div className="text-xs md:text-sm text-muted-foreground">{role.description}</div>
                     </Label>
                   </div>
                 ))}
@@ -141,12 +141,12 @@ export function UserProfileSetup({ onComplete }: UserProfileSetupProps) {
               value={profile.department}
               onValueChange={(value) => setProfile(prev => ({ ...prev, department: value }))}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                 {departments.map((dept) => (
-                  <div key={dept.id} className="flex items-center space-x-2 p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors">
+                  <div key={dept.id} className="flex items-center space-x-2 p-3 md:p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors">
                     <RadioGroupItem value={dept.id} id={dept.id} />
                     <Label htmlFor={dept.id} className="flex-1 cursor-pointer">
-                      <div className="font-medium">{dept.label}</div>
+                      <div className="font-medium text-sm md:text-base">{dept.label}</div>
                     </Label>
                   </div>
                 ))}
@@ -155,23 +155,23 @@ export function UserProfileSetup({ onComplete }: UserProfileSetupProps) {
           )}
 
           {step === 3 && (
-            <div className="space-y-4">
-              <p className="text-sm text-muted-foreground">Select all areas that interest you (choose at least one):</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {interests.map((interest) => (
-                  <div key={interest.id} className="flex items-center space-x-2 p-3 border border-border rounded-lg hover:bg-muted/50 transition-colors">
-                    <Checkbox
-                      id={interest.id}
-                      checked={profile.interests.includes(interest.id)}
-                      onCheckedChange={(checked) => handleInterestChange(interest.id, checked as boolean)}
-                    />
-                    <Label htmlFor={interest.id} className="flex-1 cursor-pointer">
-                      {interest.label}
-                    </Label>
-                  </div>
-                ))}
+              <div className="space-y-4">
+                <p className="text-sm text-muted-foreground">Select all areas that interest you (choose at least one):</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                  {interests.map((interest) => (
+                    <div key={interest.id} className="flex items-center space-x-2 p-3 border border-border rounded-lg hover:bg-muted/50 transition-colors">
+                      <Checkbox
+                        id={interest.id}
+                        checked={profile.interests.includes(interest.id)}
+                        onCheckedChange={(checked) => handleInterestChange(interest.id, checked as boolean)}
+                      />
+                      <Label htmlFor={interest.id} className="flex-1 cursor-pointer text-sm md:text-base">
+                        {interest.label}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
           )}
 
           {step === 4 && (

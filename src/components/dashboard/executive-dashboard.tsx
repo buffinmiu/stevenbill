@@ -49,26 +49,26 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
   };
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-4 md:space-y-6 p-4 md:p-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">{getDashboardTitle()}</h1>
-          <p className="text-muted-foreground mt-1">{getWelcomeMessage()}</p>
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground">{getDashboardTitle()}</h1>
+          <p className="text-muted-foreground mt-1 text-sm md:text-base">{getWelcomeMessage()}</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="icon">
-            <RefreshCw className="h-4 w-4" />
+          <Button variant="outline" size="icon" className="h-8 w-8 md:h-10 md:w-10">
+            <RefreshCw className="h-3 w-3 md:h-4 md:w-4" />
           </Button>
-          <Button variant="outline" className="flex items-center gap-2">
-            <Download className="h-4 w-4" />
-            Export
+          <Button variant="outline" className="flex items-center gap-2 text-xs md:text-sm">
+            <Download className="h-3 w-3 md:h-4 md:w-4" />
+            <span className="hidden sm:inline">Export</span>
           </Button>
         </div>
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         <MetricCard
           title="Revenue (YTD)"
           value="$110.6M"
@@ -105,16 +105,28 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
 
       {/* Charts and Analysis */}
       <Tabs defaultValue="revenue" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="revenue">Revenue Trends</TabsTrigger>
-          <TabsTrigger value="expenses">Expense Analysis</TabsTrigger>
-          <TabsTrigger value="variance">Variance Analysis</TabsTrigger>
-          <TabsTrigger value="forecast">Forecast vs Actual</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto">
+          <TabsTrigger value="revenue" className="text-xs md:text-sm px-2 py-2">
+            <span className="hidden sm:inline">Revenue Trends</span>
+            <span className="sm:hidden">Revenue</span>
+          </TabsTrigger>
+          <TabsTrigger value="expenses" className="text-xs md:text-sm px-2 py-2">
+            <span className="hidden sm:inline">Expense Analysis</span>
+            <span className="sm:hidden">Expenses</span>
+          </TabsTrigger>
+          <TabsTrigger value="variance" className="text-xs md:text-sm px-2 py-2">
+            <span className="hidden sm:inline">Variance Analysis</span>
+            <span className="sm:hidden">Variance</span>
+          </TabsTrigger>
+          <TabsTrigger value="forecast" className="text-xs md:text-sm px-2 py-2">
+            <span className="hidden sm:inline">Forecast vs Actual</span>
+            <span className="sm:hidden">Forecast</span>
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="revenue" className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div className="lg:col-span-2">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+            <div className="xl:col-span-2">
               <ChartCard
                 title="Quarterly Revenue Performance"
                 data={revenueData}
@@ -159,8 +171,8 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
         </TabsContent>
 
         <TabsContent value="expenses" className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div className="lg:col-span-2">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+            <div className="xl:col-span-2">
               <ChartCard
                 title="Monthly Operating Expenses"
                 data={expenseData}
@@ -262,8 +274,8 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
         </TabsContent>
 
         <TabsContent value="forecast" className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div className="lg:col-span-2">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+            <div className="xl:col-span-2">
               <ChartCard
                 title="Forecast Accuracy Analysis"
                 data={revenueData}
