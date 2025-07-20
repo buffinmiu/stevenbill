@@ -38,12 +38,12 @@ export function UserProfileSetup({ onComplete }: UserProfileSetupProps) {
   ];
 
   const departments = [
-    { id: "corporate", label: "Corporate Finance" },
     { id: "fp&a", label: "FP&A" },
     { id: "accounting", label: "Accounting" },
     { id: "treasury", label: "Treasury" },
     { id: "tax", label: "Tax" },
-    { id: "audit", label: "Internal Audit" }
+    { id: "audit", label: "Internal Audit" },
+    { id: "corporate", label: "Other Corporate Finance" }
   ];
 
   const interests = [
