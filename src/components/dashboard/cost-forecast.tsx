@@ -60,18 +60,18 @@ export function CostForecast({ onBack }: CostForecastProps) {
 
   // Cost structure breakdown data (donut chart)
   const costStructureData = [
-    { name: "OPEX", value: 58.3, color: "hsl(var(--chart-1))" },
-    { name: "COGS", value: 41.7, color: "hsl(var(--chart-2))" }
+    { name: "OPEX", value: 58.3, color: "hsl(var(--financial-blue))" },
+    { name: "COGS", value: 41.7, color: "hsl(var(--accent))" }
   ];
 
   // OPEX breakdown data (pie chart)
   const opexBreakdownData = [
-    { name: "Headcount", value: 34, color: "hsl(var(--chart-3))" },
-    { name: "R&D", value: 28, color: "hsl(var(--chart-4))" },
-    { name: "Sales", value: 15, color: "hsl(var(--chart-5))" },
-    { name: "Marketing", value: 12, color: "hsl(var(--chart-1))" },
-    { name: "G&A", value: 7, color: "hsl(var(--chart-2))" },
-    { name: "IT", value: 4, color: "hsl(var(--chart-3))" }
+    { name: "Headcount", value: 34, color: "hsl(var(--success))" },
+    { name: "R&D", value: 28, color: "hsl(var(--primary))" },
+    { name: "Sales", value: 15, color: "hsl(var(--accent))" },
+    { name: "Marketing", value: 12, color: "hsl(var(--financial-red))" },
+    { name: "G&A", value: 7, color: "hsl(var(--financial-blue))" },
+    { name: "IT", value: 4, color: "hsl(var(--warning))" }
   ];
 
   // Quarterly cost distribution data
@@ -207,7 +207,7 @@ export function CostForecast({ onBack }: CostForecastProps) {
                 <XAxis dataKey="quarter" />
                 <YAxis />
                 <Tooltip formatter={(value) => [`$${value}M`, "Cost"]} />
-                <Bar dataKey="cost" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="cost" fill="hsl(var(--financial-blue))" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -228,7 +228,7 @@ export function CostForecast({ onBack }: CostForecastProps) {
                 <XAxis dataKey="product" />
                 <YAxis />
                 <Tooltip formatter={(value) => [`$${value}M`, "Cost"]} />
-                <Bar dataKey="cost" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="cost" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
