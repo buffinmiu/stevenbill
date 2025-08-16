@@ -95,7 +95,7 @@ export function CostForecast({ onBack }: CostForecastProps) {
   };
 
   return (
-    <div className="p-4 md:p-6 space-y-6 bg-gradient-background min-h-screen">
+    <div className="p-4 md:p-6 space-y-6 bg-gradient-background h-full overflow-auto">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         <Button 
