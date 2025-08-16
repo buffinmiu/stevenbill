@@ -58,9 +58,9 @@ export function AiChat({ className, onDashboardChange }: AiChatProps) {
     const input = userInput.toLowerCase();
     
     // Check for specific product drill-down query - more flexible detection
-    if ((input.includes("product drill down") || input.includes("product drill-down") || input.includes("what is the product drill")) && input.includes("6 months")) {
-      onDashboardChange?.("product-drilldown");
-      return "I've generated the product drill-down dashboard for the past 6 months showing total revenue of $8.65M, net profit of $2.14M, growth rate of 15.2%, and performance across 8 active countries. The dashboard includes revenue & profit trends and country-specific analysis.";
+    if ((input.includes("product drill down") || input.includes("product drill-down") || input.includes("what is the product drill")) && input.includes("next 6 months")) {
+      onDashboardChange?.("product-drill-down");
+      return "I've generated the product drill-down dashboard for the next 6 months showing total revenue of $8.65M, net profit of $2.14M, growth rate of 15.2%, and performance across 8 active countries. The dashboard includes revenue & profit trends and country-specific analysis.";
     }
     
     // Check for cost forecast query

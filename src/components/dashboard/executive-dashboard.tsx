@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TrendingUp, DollarSign, PieChart, Users, Calendar, Download, RefreshCw } from "lucide-react";
 import { UserProfile } from "@/components/onboarding/user-profile-setup";
 import { AiChat } from "@/components/ai/ai-chat";
+import { ProductDrillDown } from "@/components/dashboard/product-drill-down";
 import { useState } from "react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
@@ -96,195 +97,15 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
     return `Good ${timeOfDay}! Here's your financial overview for today.`;
   };
 
-  // Product drill-down data (exact numbers from screenshot)
-  const productDrilldownTrendData = [
-    { name: "Jan", Revenue: 4200000, Profit: 1050000 },
-    { name: "Feb", Revenue: 4450000, Profit: 1100000 },
-    { name: "Mar", Revenue: 4700000, Profit: 1150000 },
-    { name: "Apr", Revenue: 5000000, Profit: 1200000 },
-    { name: "May", Revenue: 5200000, Profit: 1250000 },
-    { name: "Jun", Revenue: 5400000, Profit: 1300000 },
-    { name: "Jul", Revenue: 5700000, Profit: 1350000 },
-    { name: "Aug", Revenue: 5900000, Profit: 1400000 },
-    { name: "Sep", Revenue: 6100000, Profit: 1450000 },
-    { name: "Oct", Revenue: 6500000, Profit: 1550000 },
-    { name: "Nov", Revenue: 6700000, Profit: 1600000 },
-    { name: "Dec", Revenue: 7000000, Profit: 1700000 }
-  ];
-
-  const productDrilldownCountryData = [
-    { name: "United States", Revenue: 2400000, Profit: 650000 },
-    { name: "Germany", Revenue: 1800000, Profit: 450000 },
-    { name: "United Kingdom", Revenue: 1600000, Profit: 400000 },
-    { name: "France", Revenue: 1400000, Profit: 350000 },
-    { name: "Japan", Revenue: 1300000, Profit: 300000 },
-    { name: "Canada", Revenue: 1000000, Profit: 250000 },
-    { name: "Australia", Revenue: 800000, Profit: 200000 },
-    { name: "Netherlands", Revenue: 700000, Profit: 180000 }
-  ];
-
   const handleDashboardChange = (view: string) => {
     setCurrentView(view);
   };
 
-  // Product Drill-down Dashboard
-  const renderProductDrilldown = () => (
-    <div className="space-y-4 md:space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground">Product Performance Analysis</h1>
-          <p className="text-muted-foreground mt-1 text-sm md:text-base">Past 6 months drill-down view</p>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={() => setCurrentView("default")} className="text-xs md:text-sm">
-            Back to Dashboard
-          </Button>
-          <Button variant="outline" size="icon" className="h-8 w-8 md:h-10 md:w-10">
-            <RefreshCw className="h-3 w-3 md:h-4 md:w-4" />
-          </Button>
-        </div>
-      </div>
-
-      {/* Key Metrics - Exact from screenshot */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-        <MetricCard
-          title="Total Revenue"
-          value="$8.65M"
-          change={12.3}
-          changeType="percentage"
-          trend="up"
-          subtitle="vs last quarter"
-        />
-        <MetricCard
-          title="Net Profit"
-          value="$2.14M"
-          change={8.7}
-          changeType="percentage"
-          trend="up"
-          subtitle="vs last quarter"
-        />
-        <MetricCard
-          title="Growth Rate"
-          value="15.2%"
-          change={3.1}
-          changeType="percentage"
-          trend="up"
-          subtitle="vs last quarter"
-        />
-        <Card className="shadow-card">
-          <CardContent className="p-4 md:p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Active Countries</p>
-                <p className="text-2xl md:text-3xl font-bold text-foreground">8</p>
-                <p className="text-xs text-muted-foreground mt-1">0% markets</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Charts */}
-      <Tabs defaultValue="trends" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="trends">Revenue & Profit Trends</TabsTrigger>
-          <TabsTrigger value="countries">Revenue & Profit by Country</TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="trends">
-          <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle>Revenue & Profit Trends</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={productDrilldownTrendData}>
-                    <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                    <XAxis dataKey="name" className="text-xs fill-muted-foreground" />
-                    <YAxis className="text-xs fill-muted-foreground" />
-                    <Tooltip 
-                      formatter={(value: number) => [`$${(value / 1000000).toFixed(1)}M`, '']}
-                      labelFormatter={(label) => `Month: ${label}`}
-                      contentStyle={{
-                        backgroundColor: 'hsl(var(--card))',
-                        border: '1px solid hsl(var(--border))',
-                        borderRadius: '8px'
-                      }}
-                    />
-                    <Line 
-                      type="monotone" 
-                      dataKey="Revenue" 
-                      stroke="hsl(var(--primary))" 
-                      strokeWidth={3}
-                      dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2, r: 4 }}
-                    />
-                    <Line 
-                      type="monotone" 
-                      dataKey="Profit" 
-                      stroke="hsl(var(--financial-green))" 
-                      strokeWidth={3}
-                      dot={{ fill: 'hsl(var(--financial-green))', strokeWidth: 2, r: 4 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        <TabsContent value="countries">
-          <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle>Revenue & Profit by Country</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={productDrilldownCountryData}>
-                    <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                    <XAxis 
-                      dataKey="name" 
-                      className="text-xs fill-muted-foreground" 
-                      angle={-45}
-                      textAnchor="end"
-                      height={80}
-                    />
-                    <YAxis className="text-xs fill-muted-foreground" />
-                    <Tooltip 
-                      formatter={(value: number) => [`$${(value / 1000000).toFixed(2)}M`, '']}
-                      labelFormatter={(label) => `Country: ${label}`}
-                      contentStyle={{
-                        backgroundColor: 'hsl(var(--card))',
-                        border: '1px solid hsl(var(--border))',
-                        borderRadius: '8px'
-                      }}
-                    />
-                    <Bar dataKey="Revenue" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="Profit" fill="hsl(var(--financial-green))" radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-    </div>
-  );
-
   // Render different views based on current state
   console.log("Current view:", currentView); // Debug log
   
-  if (currentView === "product-drilldown") {
-    return (
-      <div className="p-4 md:p-6">
-        {renderProductDrilldown()}
-        <div className="mt-6">
-          <AiChat onDashboardChange={handleDashboardChange} />
-        </div>
-      </div>
-    );
+  if (currentView === "product-drill-down") {
+    return <ProductDrillDown onBack={() => setCurrentView("default")} />;
   }
 
   if (currentView === "cost-forecast") {
