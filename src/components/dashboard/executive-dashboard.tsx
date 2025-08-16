@@ -30,6 +30,24 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
     { name: "Jun", value: 1450000 }
   ];
 
+  // Product performance data by country
+  const productPerformanceData = [
+    { name: "USA", value: 45200000 },
+    { name: "Germany", value: 23800000 },
+    { name: "UK", value: 18500000 },
+    { name: "France", value: 16200000 },
+    { name: "Japan", value: 12800000 },
+    { name: "Canada", value: 8900000 }
+  ];
+
+  const productList = [
+    { id: 1, name: "Enterprise Analytics Suite", revenue: "$42.3M", growth: 18.5, countries: 15 },
+    { id: 2, name: "AI Marketing Platform", revenue: "$28.7M", growth: 24.1, countries: 12 },
+    { id: 3, name: "Customer Data Platform", revenue: "$19.4M", growth: 12.3, countries: 8 },
+    { id: 4, name: "Business Intelligence Pro", revenue: "$15.8M", growth: -2.1, countries: 18 },
+    { id: 5, name: "Mobile Analytics", revenue: "$12.2M", growth: 31.2, countries: 22 }
+  ];
+
   const getDashboardTitle = () => {
     const roleMap: { [key: string]: string } = {
       "ceo": "Executive Overview",
@@ -105,7 +123,7 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
 
       {/* Charts and Analysis */}
       <Tabs defaultValue="revenue" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto">
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 h-auto">
           <TabsTrigger value="revenue" className="text-xs md:text-sm px-2 py-2">
             <span className="hidden sm:inline">Revenue Trends</span>
             <span className="sm:hidden">Revenue</span>
@@ -113,6 +131,10 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
           <TabsTrigger value="expenses" className="text-xs md:text-sm px-2 py-2">
             <span className="hidden sm:inline">Expense Analysis</span>
             <span className="sm:hidden">Expenses</span>
+          </TabsTrigger>
+          <TabsTrigger value="products" className="text-xs md:text-sm px-2 py-2">
+            <span className="hidden sm:inline">Product Performance</span>
+            <span className="sm:hidden">Products</span>
           </TabsTrigger>
           <TabsTrigger value="variance" className="text-xs md:text-sm px-2 py-2">
             <span className="hidden sm:inline">Variance Analysis</span>
@@ -208,6 +230,88 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
+
+        <TabsContent value="products" className="space-y-4">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+            <div className="xl:col-span-2">
+              <ChartCard
+                title="Revenue by Country"
+                data={productPerformanceData}
+                type="bar"
+              />
+            </div>
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="h-5 w-5 text-financial-yellow" />
+                  Top Markets
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">USA</span>
+                    <span className="text-sm font-medium">$45.2M (35.9%)</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">Germany</span>
+                    <span className="text-sm font-medium">$23.8M (18.9%)</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">UK</span>
+                    <span className="text-sm font-medium">$18.5M (14.7%)</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">France</span>
+                    <span className="text-sm font-medium">$16.2M (12.9%)</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">Others</span>
+                    <span className="text-sm font-medium">$21.7M (17.6%)</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          
+          <Card className="shadow-card">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <DollarSign className="h-5 w-5 text-primary" />
+                Product Performance Overview
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto">
+                <div className="min-w-full space-y-3">
+                  {productList.map((product) => (
+                    <div key={product.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 border border-border rounded-lg hover:bg-muted/50 transition-colors">
+                      <div className="flex-1 mb-2 sm:mb-0">
+                        <div className="font-medium text-sm">{product.name}</div>
+                        <div className="text-xs text-muted-foreground">{product.countries} countries</div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="text-right">
+                          <div className="font-medium text-sm">{product.revenue}</div>
+                          <div className="text-xs text-muted-foreground">Revenue</div>
+                        </div>
+                        <Badge 
+                          variant="secondary" 
+                          className={`${product.growth > 0 
+                            ? 'bg-financial-green/10 text-financial-green' 
+                            : 'bg-financial-red/10 text-financial-red'
+                          }`}
+                        >
+                          {product.growth > 0 ? '+' : ''}{product.growth}%
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="variance" className="space-y-4">
