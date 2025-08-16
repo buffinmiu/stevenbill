@@ -3,6 +3,7 @@ import { UserProfileSetup, UserProfile } from "@/components/onboarding/user-prof
 import { ExecutiveDashboard } from "@/components/dashboard/executive-dashboard";
 import { AiChat } from "@/components/ai/ai-chat";
 import { ProductDrillDown } from "@/components/dashboard/product-drill-down";
+import { CostForecast } from "@/components/dashboard/cost-forecast";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -28,6 +29,9 @@ const Index = () => {
   const renderDashboardContent = () => {
     if (currentView === "product-drill-down") {
       return <ProductDrillDown onBack={() => setCurrentView("default")} />;
+    }
+    if (currentView === "cost-forecast") {
+      return <CostForecast onBack={() => setCurrentView("default")} />;
     }
     return <ExecutiveDashboard userProfile={userProfile} currentView={currentView} onViewChange={handleDashboardChange} />;
   };
