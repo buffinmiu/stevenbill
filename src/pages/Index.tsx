@@ -4,6 +4,7 @@ import { ExecutiveDashboard } from "@/components/dashboard/executive-dashboard";
 import { AiChat } from "@/components/ai/ai-chat";
 import { ProductDrillDown } from "@/components/dashboard/product-drill-down";
 import { CostForecast } from "@/components/dashboard/cost-forecast";
+import { LoadingScreen } from "@/components/ui/loading-screen";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,6 +16,8 @@ const Index = () => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [currentView, setCurrentView] = useState<string>("default");
+  const [isLoading, setIsLoading] = useState(false);
+  const [pendingView, setPendingView] = useState<string | null>(null);
 
   const handleProfileComplete = (profile: UserProfile) => {
     setUserProfile(profile);
@@ -22,11 +25,32 @@ const Index = () => {
 
   const handleDashboardChange = (view: string) => {
     console.log("Index: Dashboard view change requested:", view); // Debug log
-    setCurrentView(view);
-    console.log("Index: Dashboard view updated to:", view); // Debug log
+    
+    // Only show loading if switching to a different view and not already loading
+    if (view !== currentView && !isLoading) {
+      setIsLoading(true);
+      setPendingView(view);
+      // Switch to dashboard tab if on mobile and changing views
+      if (activeTab === "chat") {
+        setActiveTab("dashboard");
+      }
+    }
+  };
+
+  const handleLoadingComplete = () => {
+    if (pendingView) {
+      setCurrentView(pendingView);
+      console.log("Index: Dashboard view updated to:", pendingView); // Debug log
+      setPendingView(null);
+    }
+    setIsLoading(false);
   };
 
   const renderDashboardContent = () => {
+    if (isLoading) {
+      return <LoadingScreen onComplete={handleLoadingComplete} />;
+    }
+    
     if (currentView === "product-drill-down") {
       return <ProductDrillDown onBack={() => setCurrentView("default")} />;
     }
