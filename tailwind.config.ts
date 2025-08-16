@@ -65,7 +65,8 @@ export default {
 					green: 'hsl(var(--financial-green))',
 					red: 'hsl(var(--financial-red))',
 					blue: 'hsl(var(--financial-blue))',
-					gray: 'hsl(var(--financial-gray))'
+					gray: 'hsl(var(--financial-gray))',
+					yellow: 'hsl(var(--financial-yellow))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -138,7 +139,7 @@ export default {
 			},
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',
-				'gradient-success': 'var(--gradient-success)',
+				'gradient-accent': 'var(--gradient-accent)',
 				'gradient-background': 'var(--gradient-background)'
 			},
 			boxShadow: {
