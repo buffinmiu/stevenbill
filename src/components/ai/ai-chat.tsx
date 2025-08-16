@@ -66,7 +66,7 @@ export function AiChat({ className, onDashboardChange }: AiChatProps) {
     }
     
     // Check for cost forecast query
-    if (input.includes("forecast") && input.includes("6 months") && input.includes("cost")) {
+    if (input.includes("cost forecast")) {
       onDashboardChange?.("cost-forecast");
       return "I've generated a comprehensive 6-month cost forecast dashboard showing projected costs of $29.25M with detailed breakdowns by category, department, and monthly projections.";
     }
