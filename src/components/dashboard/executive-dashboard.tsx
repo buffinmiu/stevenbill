@@ -349,7 +349,7 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
 
       {/* Charts and Analysis */}
       <Tabs defaultValue="revenue" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 h-auto">
+        <TabsList className="grid w-full grid-cols-3 md:grid-cols-5 h-auto">
           <TabsTrigger value="revenue" className="text-xs md:text-sm px-2 py-2">
             <span className="hidden sm:inline">Revenue Trends</span>
             <span className="sm:hidden">Revenue</span>
@@ -357,10 +357,6 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
           <TabsTrigger value="expenses" className="text-xs md:text-sm px-2 py-2">
             <span className="hidden sm:inline">Expense Analysis</span>
             <span className="sm:hidden">Expenses</span>
-          </TabsTrigger>
-          <TabsTrigger value="cost-forecast" className="text-xs md:text-sm px-2 py-2">
-            <span className="hidden sm:inline">Cost Forecast</span>
-            <span className="sm:hidden">Forecast</span>
           </TabsTrigger>
           <TabsTrigger value="products" className="text-xs md:text-sm px-2 py-2">
             <span className="hidden sm:inline">Product Performance</span>
@@ -462,163 +458,6 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
           </div>
         </TabsContent>
 
-        <TabsContent value="cost-forecast" className="space-y-4">
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
-            <div className="xl:col-span-2">
-              <ChartCard
-                title="6-Month Cost Forecast"
-                data={costForecastData.map(item => ({ name: item.name, value: item.projected, forecast: item.actual }))}
-                type="line"
-                showForecast={true}
-              />
-            </div>
-            <Card className="shadow-card">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-financial-blue" />
-                  Cost Trends
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="text-center p-4 bg-gradient-primary rounded-lg text-white">
-                  <div className="text-2xl font-bold">$29.25M</div>
-                  <div className="text-sm opacity-90">Total 6-Month Forecast</div>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Monthly Average</span>
-                    <Badge variant="secondary" className="bg-primary/10 text-primary">
-                      $4.88M
-                    </Badge>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Growth Rate</span>
-                    <Badge variant="secondary" className="bg-financial-yellow/10 text-financial-yellow">
-                      +16.7% vs Last Period
-                    </Badge>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Forecast Confidence</span>
-                    <Badge variant="secondary" className="bg-financial-green/10 text-financial-green">
-                      High (87%)
-                    </Badge>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <Card className="shadow-card">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <PieChart className="h-5 w-5 text-financial-green" />
-                  Cost Category Forecast
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {costBreakdownData.map((item) => (
-                    <div key={item.category} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-                      <div className="flex-1">
-                        <div className="font-medium text-sm">{item.category}</div>
-                        <div className="text-xs text-muted-foreground">
-                          Current: ${(item.current / 1000000).toFixed(1)}M
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-medium text-sm">
-                          ${(item.projected / 1000000).toFixed(1)}M
-                        </div>
-                        <Badge 
-                          variant="secondary" 
-                          className="bg-financial-yellow/10 text-financial-yellow"
-                        >
-                          +{item.growth}%
-                        </Badge>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="shadow-card">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5 text-accent" />
-                  Department Cost Projections
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {departmentCosts.map((dept) => (
-                    <div key={dept.name} className="flex items-center justify-between p-3 border border-border rounded-lg hover:bg-muted/50 transition-colors">
-                      <div className="flex-1">
-                        <div className="font-medium text-sm">{dept.name}</div>
-                        <div className="text-xs text-muted-foreground">
-                          Current: ${(dept.current / 1000000).toFixed(1)}M
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-medium text-sm">
-                          ${(dept.projected / 1000000).toFixed(1)}M
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          +{dept.variance}% vs current
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Calendar className="h-5 w-5 text-primary" />
-                Monthly Cost Breakdown
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <div className="min-w-full space-y-3">
-                  {costForecastData.map((month) => (
-                    <div key={month.name} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 border border-border rounded-lg">
-                      <div className="flex-1 mb-2 sm:mb-0">
-                        <div className="font-medium text-sm">{month.name}</div>
-                        <div className="text-xs text-muted-foreground">
-                          {month.actual ? `Actual: $${(month.actual / 1000000).toFixed(1)}M` : 'Forecasted'}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <div className="text-right">
-                          <div className="font-medium text-sm">
-                            ${(month.projected / 1000000).toFixed(1)}M
-                          </div>
-                          <div className="text-xs text-muted-foreground">Projected</div>
-                        </div>
-                        {month.variance !== null && (
-                          <Badge 
-                            variant="secondary" 
-                            className={`${month.variance < 0 
-                              ? 'bg-financial-green/10 text-financial-green' 
-                              : 'bg-financial-red/10 text-financial-red'
-                            }`}
-                          >
-                            {month.variance > 0 ? '+' : ''}{month.variance}%
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
 
         <TabsContent value="products" className="space-y-4">
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
