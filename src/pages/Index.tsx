@@ -2,6 +2,7 @@ import { useState } from "react";
 import { UserProfileSetup, UserProfile } from "@/components/onboarding/user-profile-setup";
 import { ExecutiveDashboard } from "@/components/dashboard/executive-dashboard";
 import { AiChat } from "@/components/ai/ai-chat";
+import { ProductDrillDown } from "@/components/dashboard/product-drill-down";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -12,9 +13,23 @@ import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/componen
 const Index = () => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [currentView, setCurrentView] = useState<string>("default");
 
   const handleProfileComplete = (profile: UserProfile) => {
     setUserProfile(profile);
+  };
+
+  const handleDashboardChange = (view: string) => {
+    console.log("Index: Dashboard view change requested:", view); // Debug log
+    setCurrentView(view);
+    console.log("Index: Dashboard view updated to:", view); // Debug log
+  };
+
+  const renderDashboardContent = () => {
+    if (currentView === "product-drill-down") {
+      return <ProductDrillDown onBack={() => setCurrentView("default")} />;
+    }
+    return <ExecutiveDashboard userProfile={userProfile} currentView={currentView} onViewChange={handleDashboardChange} />;
   };
 
   if (!userProfile) {
@@ -110,11 +125,11 @@ const Index = () => {
             </div>
             
             <TabsContent value="dashboard" className="mt-0 p-4">
-              <ExecutiveDashboard userProfile={userProfile} />
+              {renderDashboardContent()}
             </TabsContent>
             
             <TabsContent value="chat" className="mt-0 p-4">
-              <AiChat className="h-[calc(100vh-140px)]" />
+              <AiChat className="h-[calc(100vh-140px)]" onDashboardChange={handleDashboardChange} />
             </TabsContent>
           </Tabs>
         </div>
@@ -125,7 +140,7 @@ const Index = () => {
             {/* Dashboard Panel */}
             <ResizablePanel defaultSize={70} minSize={30} collapsible>
               <div className="h-full">
-                <ExecutiveDashboard userProfile={userProfile} />
+                {renderDashboardContent()}
               </div>
             </ResizablePanel>
 
@@ -135,7 +150,7 @@ const Index = () => {
             {/* AI Chat Panel */}
             <ResizablePanel defaultSize={30} minSize={25} collapsible>
               <div className="h-full p-6">
-                <AiChat className="h-full" />
+                <AiChat className="h-full" onDashboardChange={handleDashboardChange} />
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>

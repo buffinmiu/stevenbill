@@ -7,16 +7,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TrendingUp, DollarSign, PieChart, Users, Calendar, Download, RefreshCw } from "lucide-react";
 import { UserProfile } from "@/components/onboarding/user-profile-setup";
 import { AiChat } from "@/components/ai/ai-chat";
-import { ProductDrillDown } from "@/components/dashboard/product-drill-down";
-import { useState } from "react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 interface ExecutiveDashboardProps {
   userProfile: UserProfile;
+  currentView?: string;
+  onViewChange?: (view: string) => void;
 }
 
-export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
-  const [currentView, setCurrentView] = useState<string>("default");
+export function ExecutiveDashboard({ userProfile, currentView = "default", onViewChange }: ExecutiveDashboardProps) {
   
   // Sample data - would come from your financial data API
   
@@ -96,24 +95,6 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
     const timeOfDay = new Date().getHours() < 12 ? "morning" : new Date().getHours() < 18 ? "afternoon" : "evening";
     return `Good ${timeOfDay}! Here's your financial overview for today.`;
   };
-
-  const handleDashboardChange = (view: string) => {
-    console.log("Dashboard view change requested:", view); // Debug log
-    setCurrentView(view);
-    console.log("Dashboard view updated to:", view); // Debug log
-  };
-
-  // Render different views based on current state
-  console.log("Current view:", currentView); // Debug log
-  
-  if (currentView === "product-drill-down") {
-    return <ProductDrillDown onBack={() => setCurrentView("default")} />;
-  }
-
-  if (currentView === "cost-forecast") {
-    // For cost forecast, we'll just show the default dashboard with cost-forecast tab active
-    // This is handled by the existing tabs structure
-  }
 
   return (
     <div className="space-y-4 md:space-y-6 p-4 md:p-6">
@@ -340,7 +321,7 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
 
       {/* AI Chat Integration */}
       <div className="mt-6">
-        <AiChat onDashboardChange={handleDashboardChange} />
+        <AiChat onDashboardChange={onViewChange} />
       </div>
     </div>
   );
