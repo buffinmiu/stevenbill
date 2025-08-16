@@ -56,9 +56,11 @@ export function AiChat({ className, onDashboardChange }: AiChatProps) {
 
   const generateAiResponse = (userInput: string) => {
     const input = userInput.toLowerCase();
+    console.log("AI Chat input:", input); // Debug log
     
     // Check for specific product drill-down query - more flexible detection
-    if ((input.includes("product drill down") || input.includes("product drill-down") || input.includes("what is the product drill")) && input.includes("next 6 months")) {
+    if (input.includes("what is the product drill down for the next 6 months")) {
+      console.log("Product drill-down detected, changing view"); // Debug log
       onDashboardChange?.("product-drill-down");
       return "I've generated the product drill-down dashboard for the next 6 months showing total revenue of $8.65M, net profit of $2.14M, growth rate of 15.2%, and performance across 8 active countries. The dashboard includes revenue & profit trends and country-specific analysis.";
     }

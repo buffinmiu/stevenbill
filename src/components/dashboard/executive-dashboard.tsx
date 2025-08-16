@@ -98,7 +98,9 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
   };
 
   const handleDashboardChange = (view: string) => {
+    console.log("Dashboard view change requested:", view); // Debug log
     setCurrentView(view);
+    console.log("Dashboard view updated to:", view); // Debug log
   };
 
   // Render different views based on current state
