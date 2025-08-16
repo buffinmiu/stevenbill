@@ -15,9 +15,10 @@ interface Message {
 
 interface AiChatProps {
   className?: string;
+  onDashboardChange?: (view: string) => void;
 }
 
-export function AiChat({ className }: AiChatProps) {
+export function AiChat({ className, onDashboardChange }: AiChatProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -54,6 +55,20 @@ export function AiChat({ className }: AiChatProps) {
   };
 
   const generateAiResponse = (userInput: string) => {
+    const input = userInput.toLowerCase();
+    
+    // Check for specific product drill-down query
+    if (input.includes("product drill down") && input.includes("6 months")) {
+      onDashboardChange?.("product-drilldown");
+      return "I've generated the product drill-down dashboard for the past 6 months showing total revenue of $8.65M, net profit of $2.14M, growth rate of 15.2%, and performance across 8 active countries. The dashboard includes revenue & profit trends and country-specific analysis.";
+    }
+    
+    // Check for cost forecast query
+    if (input.includes("forecast") && input.includes("6 months") && input.includes("cost")) {
+      onDashboardChange?.("cost-forecast");
+      return "I've generated a comprehensive 6-month cost forecast dashboard showing projected costs of $29.25M with detailed breakdowns by category, department, and monthly projections.";
+    }
+    
     const responses = [
       "Based on current data trends, I recommend reviewing Q4 revenue projections. The variance analysis shows a 15% deviation from forecast.",
       "I've analyzed the budget vs actual performance. Would you like me to generate a detailed variance report for management review?",
