@@ -274,6 +274,8 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
   );
 
   // Render different views based on current state
+  console.log("Current view:", currentView); // Debug log
+  
   if (currentView === "product-drilldown") {
     return (
       <div className="p-4 md:p-6">
@@ -283,6 +285,11 @@ export function ExecutiveDashboard({ userProfile }: ExecutiveDashboardProps) {
         </div>
       </div>
     );
+  }
+
+  if (currentView === "cost-forecast") {
+    // For cost forecast, we'll just show the default dashboard with cost-forecast tab active
+    // This is handled by the existing tabs structure
   }
 
   return (
